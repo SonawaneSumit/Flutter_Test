@@ -18,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   bool canPop = false;
+  bool isPasswordVisible = false;
   int exitAppCount = 1;
   final TextEditingController emailText =
       TextEditingController(text: "eve.holt@reqres.in");
@@ -151,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: TextFormField(
                             maxLines: 1,
                             maxLength: 10,
+                            obscureText: !isPasswordVisible,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor.primaryDark.withOpacity(0.2),
@@ -163,6 +165,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               counterText: '',
                               border: const OutlineInputBorder(
                                 borderSide: BorderSide.none,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  isPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    isPasswordVisible = !isPasswordVisible;
+                                  });
+                                },
                               ),
                             ),
                             style: const TextStyle(color: Colors.black),

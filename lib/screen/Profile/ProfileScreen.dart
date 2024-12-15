@@ -19,7 +19,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: AppBar(
+          title: const Text(
+        'Profile',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      )),
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
