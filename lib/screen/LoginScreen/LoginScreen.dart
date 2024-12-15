@@ -55,168 +55,164 @@ class _LoginScreenState extends State<LoginScreen> {
           return true;
         }
       },
-      child: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('asset/bg_a.png'),
-              opacity: BorderSide.strokeAlignOutside,
-              filterQuality: FilterQuality.medium,
-              fit: BoxFit.cover,
-            ),
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('asset/bg_a.png'),
+            opacity: BorderSide.strokeAlignOutside,
+            filterQuality: FilterQuality.medium,
+            fit: BoxFit.cover,
           ),
-          padding: const EdgeInsets.all(16),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: BlocConsumer<LoginBloc, LoginState>(
-              listener: (context, state) {
-                if (state is LoginFail) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        state.error,
-                      ),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: BlocConsumer<LoginBloc, LoginState>(
+            listener: (context, state) {
+              if (state is LoginFail) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      state.error,
                     ),
-                  );
-                }
-                if (state is LoginSuccessState) {
-                  isLoading = true;
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Dashboard(),
+                  ),
+                );
+              }
+              if (state is LoginSuccessState) {
+                isLoading = true;
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Dashboard(),
+                    ),
+                    (r) => false);
+              }
+            },
+            builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Row(
+                    children: [
+                      Text(
+                        'Hello User ',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold),
                       ),
-                      (r) => false);
-                }
-              },
-              builder: (context, state) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Row(
+                    ],
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 32),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: AppColor.primaryColor,
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: Row(
                       children: [
-                        Text(
-                          'Hello User ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: TextFormField(
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor.primaryDark.withOpacity(0.2),
+                              contentPadding: const EdgeInsets.all(12),
+                              hintText: 'Enter your Email ',
+                              hintStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400),
+                              isDense: true,
+                              counterText: '',
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            style: const TextStyle(color: Colors.black),
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailText,
+                            textInputAction: TextInputAction.done,
+                          ),
                         ),
                       ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 32),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: AppColor.primaryColor,
-                      ),
-                      clipBehavior: Clip.hardEdge,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              autofocus: true,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor:
-                                    AppColor.primaryDark.withOpacity(0.2),
-                                contentPadding: const EdgeInsets.all(12),
-                                hintText: 'Enter your Email ',
-                                hintStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400),
-                                isDense: true,
-                                counterText: '',
-                                border: const OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                              style: const TextStyle(color: Colors.black),
-                              keyboardType: TextInputType.emailAddress,
-                              controller: emailText,
-                              textInputAction: TextInputAction.done,
-                            ),
-                          ),
-                        ],
-                      ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: AppColor.primaryColor,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: AppColor.primaryColor,
-                      ),
-                      clipBehavior: Clip.hardEdge,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              maxLines: 1,
-                              maxLength: 10,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor:
-                                    AppColor.primaryDark.withOpacity(0.2),
-                                contentPadding: const EdgeInsets.all(12),
-                                hintText: 'Enter your Password',
-                                hintStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400),
-                                isDense: true,
-                                counterText: '',
-                                border: const OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
+                    clipBehavior: Clip.hardEdge,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            maxLines: 1,
+                            maxLength: 10,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor.primaryDark.withOpacity(0.2),
+                              contentPadding: const EdgeInsets.all(12),
+                              hintText: 'Enter your Password',
+                              hintStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400),
+                              isDense: true,
+                              counterText: '',
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
                               ),
-                              style: const TextStyle(color: Colors.black),
-                              keyboardType: TextInputType.text,
-                              controller: passwordText,
-                              textInputAction: TextInputAction.done,
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 32),
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          context.read<LoginBloc>().add(LoginRequestedEvent(
-                              email: emailText.text.trim(),
-                              password: passwordText.text.trim()));
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              const MaterialStatePropertyAll(Colors.white),
-                          shape: MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
+                            style: const TextStyle(color: Colors.black),
+                            keyboardType: TextInputType.text,
+                            controller: passwordText,
+                            textInputAction: TextInputAction.done,
                           ),
                         ),
-                        child: isLoading
-                            ? const SizedBox(
-                                height: 25,
-                                width: 25,
-                                child: CircularProgressIndicator(
-                                  color: AppColor.Blue,
-                                ),
-                              )
-                            : const Text(
-                                'Submit',
-                                style: TextStyle(
-                                  color: AppColor.primaryDark,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                      ),
+                      ],
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 32),
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<LoginBloc>().add(LoginRequestedEvent(
+                            email: emailText.text.trim(),
+                            password: passwordText.text.trim()));
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            const MaterialStatePropertyAll(Colors.white),
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                      child: isLoading
+                          ? const SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(
+                                color: AppColor.Blue,
+                              ),
+                            )
+                          : const Text(
+                              'Submit',
+                              style: TextStyle(
+                                color: AppColor.primaryDark,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

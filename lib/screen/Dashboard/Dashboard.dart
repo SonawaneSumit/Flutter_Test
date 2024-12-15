@@ -1,10 +1,11 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, unused_element
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertest/screen/Profile/ProfileScreen.dart';
 import 'package:fluttertest/screen/userList/UserList.dart';
 import 'package:fluttertest/utils/Theme.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -17,6 +18,7 @@ class _DashboardState extends State<Dashboard> {
   var appBarTitle = '';
   final List<String> tabTitles = ['Home', 'Profile'];
   int _selectedIndex = 0;
+  int backPressCounter = 0;
   void _onNavBarItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -24,7 +26,6 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void updateAppBarTitle() {
-    // Ensure that the tab index is within the bounds of tabTitles list
     if (mounted) {
       setState(() {
         if (_selectedIndex >= 0 && _selectedIndex < tabTitles.length) {
@@ -34,12 +35,24 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  final List<Widget> _pages = [UserListScreen(), const ProfileScreen()];
+  final List<Widget> _pages = [const UserListScreen(), const ProfileScreen()];
 
   @override
   void initState() {
     super.initState();
     updateAppBarTitle();
+  }
+
+  Future<bool> _handleWillPop() async {
+    if (backPressCounter == 0) {
+      backPressCounter++;
+      Fluttertoast.showToast(msg: 'Press again to exit');
+      Future.delayed(const Duration(seconds: 2), () {
+        backPressCounter = 0;
+      });
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -160,10 +173,7 @@ class BottomNavCurvePainter extends CustomPainter {
         insetCurveEndX, 0, insetCurveEndX + transitionToInsetCurveWidth, 0);
     path.quadraticBezierTo(size.width * 0.80, 0, size.width, 12);
     path.lineTo(size.width, size.height + 56);
-    path.lineTo(
-        0,
-        size.height +
-            50); //+56 here extends the navbar below app bar to include extra space on some screens (iphone 11)
+    path.lineTo(0, size.height + 50);
     canvas.drawPath(path, paint);
   }
 
