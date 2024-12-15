@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, unused_element
+// ignore_for_file: library_private_types_in_public_api, unused_element, deprecated_member_use
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,51 +60,54 @@ class _DashboardState extends State<Dashboard> {
     var width = MediaQuery.sizeOf(context).width;
     var backgroundColor = Colors.grey[400];
     double height = 56;
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: IndexedStack(
-            index: _selectedIndex,
-            children: _pages,
-          ),
-          bottomNavigationBar: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              CustomPaint(
-                size: Size(width, height + 7),
-                painter:
-                    BottomNavCurvePainter(backgroundColor: backgroundColor!),
-                child: SizedBox(
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      NavBarIcon(
-                        text: "Home",
-                        icon: CupertinoIcons.home,
-                        selected: _selectedIndex == 0,
-                        onPressed: () {
-                          _onNavBarItemTapped(0);
-                          updateAppBarTitle();
-                        },
-                      ),
-                      NavBarIcon(
-                        text: "Profile",
-                        icon: CupertinoIcons.profile_circled,
-                        selected: _selectedIndex == 1,
-                        onPressed: () {
-                          _onNavBarItemTapped(1);
-                          updateAppBarTitle();
-                        },
-                      ),
-                    ],
+    return WillPopScope(
+      onWillPop: _handleWillPop,
+      child: Container(
+        decoration: const BoxDecoration(color: Colors.white),
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: IndexedStack(
+              index: _selectedIndex,
+              children: _pages,
+            ),
+            bottomNavigationBar: Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                CustomPaint(
+                  size: Size(width, height + 7),
+                  painter:
+                      BottomNavCurvePainter(backgroundColor: backgroundColor!),
+                  child: SizedBox(
+                    height: 60,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        NavBarIcon(
+                          text: "Home",
+                          icon: CupertinoIcons.home,
+                          selected: _selectedIndex == 0,
+                          onPressed: () {
+                            _onNavBarItemTapped(0);
+                            updateAppBarTitle();
+                          },
+                        ),
+                        NavBarIcon(
+                          text: "Profile",
+                          icon: CupertinoIcons.profile_circled,
+                          selected: _selectedIndex == 1,
+                          onPressed: () {
+                            _onNavBarItemTapped(1);
+                            updateAppBarTitle();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
